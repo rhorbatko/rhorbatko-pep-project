@@ -13,7 +13,7 @@ public class MessageService{
         this.accountDAO = new AccountDAO();
     }
 
-    boolean messageIsValid(Message message){
+    public boolean messageIsValid(Message message){
         int message_text_length = message.getMessage_text().length();
 
         boolean messageLengthIsValid = message_text_length > 0 && message_text_length < 255;
@@ -26,5 +26,8 @@ public class MessageService{
             return messageDAO.insertNewMessage(message);
         }
         return null;
+    }
+    public List<Message> viewAllMessages(){
+        return messageDAO.getAllMessages();
     }
 };
