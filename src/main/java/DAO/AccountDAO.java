@@ -9,11 +9,11 @@ import java.sql.Statement;
 import Model.Account;
 import Util.ConnectionUtil;
 
-public class UserDAO {
+public class AccountDAO {
 
 
-    // register user
-    public Account insertUser(Account account){
+    // create account for user
+    public Account insertAccount(Account account){
         Connection conn = ConnectionUtil.getConnection();
         try{
             String sql = "INSERT INTO account (username, password) VALUES (?,?)";
@@ -33,8 +33,8 @@ public class UserDAO {
         }
         return null;
     };
-    //retrieve user
-    public Account getUser(String username, String password){
+    //retrieve account for user
+    public Account getAccountByUserAndPass(String username, String password){
         Connection conn = ConnectionUtil.getConnection();
         try {
             String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
@@ -56,5 +56,27 @@ public class UserDAO {
         }
         return null;
         
+    }
+    public Account getAccountByUserName(String username){
+        Connection conn = ConnectionUtil.getConnection();
+
+        try {
+            String sql = "SELECT * FROM account WHERE username = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+           
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                Account acc = new Account(
+                rs.getString("username"),
+                rs.getString("password"));
+                acc.setAccount_id(rs.getInt("account_id"));
+                return acc; 
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
