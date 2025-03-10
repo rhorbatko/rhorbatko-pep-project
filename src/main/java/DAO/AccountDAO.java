@@ -33,7 +33,7 @@ public class AccountDAO {
         }
         return null;
     };
-    //retrieve account for user
+    //retrieve account for user. Filter by username and password
     public Account getAccountByUserAndPass(String username, String password){
         Connection conn = ConnectionUtil.getConnection();
         try {
@@ -57,6 +57,8 @@ public class AccountDAO {
         return null;
         
     }
+
+    //retrieve acccount by username.
     public Account getAccountByUserName(String username){
         Connection conn = ConnectionUtil.getConnection();
 
