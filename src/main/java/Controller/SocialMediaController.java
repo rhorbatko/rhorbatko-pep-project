@@ -29,6 +29,7 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         // app.get("example-endpoint", this::exampleHandler);
         app.post("/register", this::postNewAccountHandler);
+        app.post("/login", this::accountLoginHandler);
 
         return app;
     }
@@ -37,9 +38,10 @@ public class SocialMediaController {
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
      */
-    private void exampleHandler(Context context) {
-        context.json("sample text");
-    }
+    // private void exampleHandler(Context context) {
+    //     context.json("sample text");
+    // }
+
     private void postNewAccountHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         Account acct = mapper.readValue(ctx.body(), Account.class);
@@ -48,6 +50,16 @@ public class SocialMediaController {
             ctx.json(addedAccount).status(200);
         }else{
             ctx.status(400);
+        }
+    }
+    private void accountLoginHandler(Context ctx)throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account acct = mapper.readValue(ctx.body(), Account.class);
+        Account accountToLogin = accountService.logIntoAccount(acct.getUsername(), acct.getPassword());
+        if(accountToLogin != null){
+            ctx.json(accountToLogin).status(200);
+        }else{
+            ctx.status(401);
         }
     }
 

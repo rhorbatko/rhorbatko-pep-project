@@ -12,6 +12,7 @@ public class AccountService{
     public boolean userNameIsValid(String username){
         //check if username is not empty
         boolean userNameNotEmpty = username.length() != 0;
+        // check that no other usernames exist with that name
         boolean userNameAvailable = this.accountDAO.getAccountByUserName(username) == null;
 
         return userNameNotEmpty && userNameAvailable;
@@ -30,4 +31,8 @@ public class AccountService{
         }
         return null;        
     }
+    public Account logIntoAccount(String username, String password){
+        return accountDAO.getAccountByUserAndPass(username, password);
+    }
+
 }
