@@ -9,6 +9,7 @@ import Service.AccountService;
 import Service.MessageService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import java.util.List;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
@@ -35,6 +36,7 @@ public class SocialMediaController {
         app.post("/register", this::postNewAccountHandler);
         app.post("/login", this::accountLoginHandler);
         app.post("/messages", this::postMessageHandler);
+        app.get("/messages", this::getAllMessagesHandler);
 
         return app;
     }
@@ -76,6 +78,12 @@ public class SocialMediaController {
         }else{
             ctx.status(400);
         }
+    }
+
+    private void getAllMessagesHandler(Context ctx)throws JsonProcessingException{
+
+        List<Message> allMessages = messageService.viewAllMessages();
+        ctx.json(allMessages).status(200);
     }
 
 
