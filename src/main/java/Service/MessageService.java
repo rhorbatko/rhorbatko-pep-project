@@ -41,8 +41,7 @@ public class MessageService{
         Optional<Message> messageToDelete = messageDAO.getMessageById(id);
         if(messageToDelete.isPresent()){
             messageDAO.deleteMessageById(id);
-            return messageToDelete;
         }
-        return Optional.empty();
+        return messageToDelete;
     }
 };
