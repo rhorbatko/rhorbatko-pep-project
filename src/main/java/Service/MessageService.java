@@ -32,7 +32,17 @@ public class MessageService{
     public List<Message> viewAllMessages(){
         return messageDAO.getAllMessages();
     }
+
     public Optional<Message> viewMessageById(int id){
         return messageDAO.getMessageById(id);
+    }
+
+    public Optional<Message> deleteMessageById(int id){
+        Optional<Message> messageToDelete = messageDAO.getMessageById(id);
+        if(messageToDelete.isPresent()){
+            messageDAO.deleteMessageById(id);
+            return messageToDelete;
+        }
+        return Optional.empty();
     }
 };
