@@ -10,6 +10,7 @@ import Service.MessageService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
@@ -88,9 +89,15 @@ public class SocialMediaController {
 
     private void getMessageByIdHandler(Context ctx) throws JsonProcessingException{
         int id = Integer.parseInt(ctx.pathParam("message_id"));
-        List<Message> data = messageService.viewMessageById(id);
+        Optional<Message> data = messageService.viewMessageById(id);
+
+        if(data.isPresent()){
+
+            ctx.json(data.get()).status(200);
+        }else{
+            ctx.status(200);
+        }
         
-        ctx.json(data).status(200);
     }
 
 }

@@ -4,6 +4,7 @@ import Model.Message;
 import DAO.AccountDAO;
 import DAO.MessageDAO;
 import java.util.List;
+import java.util.Optional;
 
 
 public class MessageService{
@@ -31,7 +32,7 @@ public class MessageService{
     public List<Message> viewAllMessages(){
         return messageDAO.getAllMessages();
     }
-    public List<Message> viewMessageById(int id){
+    public Optional<Message> viewMessageById(int id){
         return messageDAO.getMessageById(id);
     }
 };

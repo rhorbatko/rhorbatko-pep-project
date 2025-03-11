@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MessageDAO{
     public Message insertNewMessage(Message message){
@@ -61,9 +62,8 @@ public class MessageDAO{
 
     }
 
-    public List<Message> getMessageById( int id){
+    public Optional<Message> getMessageById( int id){
         Connection conn = ConnectionUtil.getConnection();
-        List<Message> messages = new ArrayList<Message>();
         try {
             String sql = "SELECT * FROM message WHERE message_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -76,14 +76,13 @@ public class MessageDAO{
                     rs.getString("message_text"),
                     rs.getLong("time_posted_epoch")
                     );
-                messages.add(m);
-            }
+                    return Optional.of(m);
+                }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return messages;
-
+        return Optional.empty();
     }
     
 
