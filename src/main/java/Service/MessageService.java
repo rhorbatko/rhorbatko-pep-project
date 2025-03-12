@@ -44,4 +44,19 @@ public class MessageService{
         }
         return messageToDelete;
     }
+    public Optional<Message> updateMessageById(int id, String text){
+        Optional<Message> messageToUpdate = messageDAO.getMessageById(id);
+
+        int message_text_length = text.length();
+        boolean messageLengthIsValid = message_text_length > 0 && message_text_length < 255;
+        if(messageToUpdate.isPresent() && messageLengthIsValid){
+            messageDAO.updateMessageById(id, text);
+            Message updatedMessage = messageToUpdate.get();
+            updatedMessage.setMessage_text(text);
+            return Optional.of(updatedMessage);
+        }
+        return Optional.empty();
+
+    }   
+
 };
