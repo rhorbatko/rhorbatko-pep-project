@@ -49,6 +49,7 @@ public class MessageService{
 
         int message_text_length = text.length();
         boolean messageLengthIsValid = message_text_length > 0 && message_text_length < 255;
+        
         if(messageToUpdate.isPresent() && messageLengthIsValid){
             messageDAO.updateMessageById(id, text);
             Message updatedMessage = messageToUpdate.get();
